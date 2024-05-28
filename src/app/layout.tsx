@@ -6,6 +6,8 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { NeynarContextProvider, Theme } from "@neynar/react";
 import "@neynar/react/dist/style.css";
+import { AppProvider } from "./Context/AppContext";
+import NeynarProviderWrapper from "./Context/NeynarProviderWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,22 +23,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <NeynarContextProvider
-        settings={{
-          clientId: process.env.NEXT_PUBLIC_NEYNAR_CLIENT_ID || "",
-          defaultTheme: Theme.Light,
-          eventsCallbacks: {
-            onAuthSuccess: () => {},
-            onSignout() {},
-          },
-        }}
-      >
+      
       <body className={inter.className}>
-        <Header />
-        {children}
-        <Footer />
+        <AppProvider>
+          <NeynarProviderWrapper>
+            <Header />
+              {children}
+            <Footer />
+          </NeynarProviderWrapper>
+        </AppProvider>
       </body>      
-      </NeynarContextProvider>
+      
     </html>    
   );
 }

@@ -1,13 +1,25 @@
-"use client";
-
-import Head from 'next/head';
-import Link from 'next/link';
+'use client';
 import { NeynarAuthButton, useNeynarContext } from "@neynar/react";
+import Image from "next/image";
+import Link from "next/link";
+import { ReactNode, useEffect } from "react";
+import { Props } from "../interface";
+import { GraphState, useApp } from "../Context/AppContext";
 
+const GraphLayout = ({ children }: Props) => {
+  const { setGraphButton } = useApp();
+  const { isAuthenticated } = useNeynarContext();
 
-export default function Graph() {
+  useEffect(() => {
+    if (isAuthenticated) {
+      setGraphButton(GraphState.Attest);
+    } else {
+      setGraphButton(GraphState.Signin);
+    }
+  }, [isAuthenticated, setGraphButton]);
+
   return (
-      <main className="flex flex-col items-start justify-center px-4 py-8">
+    <main className="flex flex-col items-start justify-center px-4 py-8">
         <h1 className="text-5xl font-bold mb-4">Put your work onchain.</h1>
 
         <form className="w-full max-w-lg">
@@ -34,9 +46,12 @@ export default function Graph() {
             </label>
             <input className="w-full border-2 border-black p-2" type="text" value="@ottp" />
           </div>
-          <NeynarAuthButton />
-          
+          {isAuthenticated && <NeynarAuthButton />}
+          {children}
         </form>
       </main>
-  )
-}
+    
+  );
+};
+
+export default GraphLayout;

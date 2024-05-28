@@ -1,19 +1,13 @@
 "use client";
 
 import { useContext, createContext, useMemo, useState, FC, ReactNode } from "react";
-import { Props } from "../interface";
+import { AppContextInterface, Props } from "../interface";
 
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 
 export enum GraphState {
   Signin = "signin",
   Attest = "attest",
-}
-
-
-interface AppContextInterface {
-  graphButton: GraphState;
-  setGraphButton: SetState<GraphState>;
 }
 
 const AppContext = createContext<AppContextInterface | null>(null);
@@ -28,7 +22,6 @@ export const AppProvider: FC<Props> = ({ children }) => {
     }),
     [graphButton]
   );
-
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
