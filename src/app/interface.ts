@@ -1,14 +1,14 @@
 import { ReactNode } from "react";
-import { GraphState } from "./Context/AppContext";
 import { SetState } from "@neynar/react/dist/types/common";
+import { GraphState } from "@/Context/AppContext";
 
 interface Props {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 interface AppContextInterface {
-    graphButton: GraphState;
-    setGraphButton: SetState<GraphState>;
+  graphButton: GraphState;
+  setGraphButton: SetState<GraphState>;
 }
 
-export type { Props, AppContextInterface }
+export type { Props, AppContextInterface };
